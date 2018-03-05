@@ -39,7 +39,8 @@ int main(int argc, char** argv)
 	std::chrono::time_point<std::chrono::high_resolution_clock> endTime = std::chrono::high_resolution_clock::now();
 	long long timeElapsedInMs = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count();
 
-	std::cout << "PI = " << pi << '\n'
+	std::cout << "Calculation completed\n"
+		<< "PI = " << pi << '\n'
 		<< "Время вычисления: " << timeElapsedInMs << "мс" << std::endl;
 	delete piCalculator;
 	return 0;

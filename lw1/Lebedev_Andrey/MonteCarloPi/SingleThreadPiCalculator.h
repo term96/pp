@@ -12,6 +12,7 @@ public:
 
 protected:
 	static bool isRandomDotInsideCircle(IRandomNumberGenerator * numberGenerator);
+	static void showProgress(size_t done, size_t total);
 
 	static const double CIRCLE_RADIUS;
 	const size_t mIterationsNumber;
