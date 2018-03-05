@@ -4,5 +4,5 @@ class IMonteCarloPiCalculator
 {
 public:
 	virtual double getPi() = 0;
-	virtual ~IMonteCarloPiCalculator() {};
+	virtual ~IMonteCarloPiCalculator() = default;
 };

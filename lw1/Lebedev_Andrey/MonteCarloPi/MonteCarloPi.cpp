@@ -6,6 +6,7 @@
 int main(int argc, char** argv)
 {
 	const char * helpText = "»спользование: montecarlopi.exe <кол-во итераций> <кол-во потоков>";
+	const char * argCountError = "Ќеверное число параметров. «апустите с параметром --help дл€ просмотра описани€";
 	const double circleRadius = 1.;
 	SetConsoleOutputCP(1251);
 
@@ -13,22 +14,23 @@ int main(int argc, char** argv)
 	size_t iterationsNumber;
 	size_t threadsNumber;
 
-	if (argc == 2 && argv[1] == "--help")
+	if (argc == 2 && strcmp("--help", argv[1]) == 0)
 	{
 		std::cout << helpText << std::endl;
 		return 0;
 	}
-	else if (argc == 3)
+
+	if (argc == 3)
 	{
 		iterationsNumber = std::atoi(argv[1]);
 		threadsNumber = std::atoi(argv[2]);
 		piCalculator = threadsNumber == 1
-			? new CSingleThreadPiCalculator(iterationsNumber, circleRadius)
-			: new CMultiThreadPiCalculator(iterationsNumber, threadsNumber, circleRadius);
+			? new CSingleThreadPiCalculator(iterationsNumber)
+			: new CMultiThreadPiCalculator(iterationsNumber, threadsNumber);
 	}
 	else
 	{
-		std::cout << helpText << std::endl;
+		std::cout << argCountError << std::endl;
 		return 1;
 	}
 

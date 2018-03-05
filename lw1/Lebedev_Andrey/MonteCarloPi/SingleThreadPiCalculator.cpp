@@ -1,17 +1,19 @@
 #include "stdafx.h"
 #include "SingleThreadPiCalculator.h"
 
-CSingleThreadPiCalculator::CSingleThreadPiCalculator(size_t iterationsNumber, double circleRadius)
-	: mIterationsNumber(iterationsNumber), mCircleRadius(circleRadius)
+const double CSingleThreadPiCalculator::CIRCLE_RADIUS = 1.;
+
+CSingleThreadPiCalculator::CSingleThreadPiCalculator(size_t iterationsNumber)
+	: mIterationsNumber(iterationsNumber)
 {
 }
 
 double CSingleThreadPiCalculator::getPi()
 {
-	IRandomNumberGenerator * numberGenerator = new CRandomNumberGenerator(-mCircleRadius, mCircleRadius);
+	IRandomNumberGenerator * numberGenerator = new CRandomNumberGenerator(-CIRCLE_RADIUS, CIRCLE_RADIUS);
 	size_t dotsInsideCircle = 0;
 
-	for (int i = 0; i < mIterationsNumber; i++) 
+	for (size_t i = 0; i < mIterationsNumber; i++) 
 	{
 		if (isRandomDotInsideCircle(numberGenerator))
 		{
@@ -23,9 +25,9 @@ double CSingleThreadPiCalculator::getPi()
 	return 4. * dotsInsideCircle / mIterationsNumber;
 }
 
-bool CSingleThreadPiCalculator::isRandomDotInsideCircle(IRandomNumberGenerator * numberGenerator) const
+bool CSingleThreadPiCalculator::isRandomDotInsideCircle(IRandomNumberGenerator * numberGenerator)
 {
 	double x = numberGenerator->getRandomDouble();
 	double y = numberGenerator->getRandomDouble();
-	return x * x + y * y <= mCircleRadius * mCircleRadius;
+	return x * x + y * y <= CIRCLE_RADIUS * CIRCLE_RADIUS;
 }
