@@ -6,7 +6,7 @@
 int main(int argc, char** argv)
 {
 	const char * helpText = "»спользование: montecarlopi.exe <кол-во итераций> <кол-во потоков>";
-	const char * argCountError = "Ќеверное число параметров. «апустите с параметром --help дл€ просмотра описани€";
+	const char * argCountError = "Ќеверное количество параметров. «апустите с параметром --help дл€ просмотра описани€";
 	const double circleRadius = 1.;
 	SetConsoleOutputCP(1251);
 
