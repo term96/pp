@@ -1,13 +1,13 @@
 #pragma once
 #include "IRandomNumberGenerator.h"
 
-class RandomNumberGenerator : public IRandomNumberGenerator
+class CRandomNumberGenerator : public IRandomNumberGenerator
 {
 public:
 	double getRandomDouble();
 
-	RandomNumberGenerator(double min, double max);
-	~RandomNumberGenerator();
+	CRandomNumberGenerator(double min, double max);
+	~CRandomNumberGenerator();
 
 private:
 	std::random_device mRandomDevice;

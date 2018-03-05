@@ -1,16 +1,19 @@
 #pragma once
 #include "IMonteCarloPiCalculator.h"
+#include "IRandomNumberGenerator.h"
+#include "RandomNumberGenerator.h"
 
-class SingleThreadPiCalculator : public IMonteCarloPiCalculator
+class CSingleThreadPiCalculator : public IMonteCarloPiCalculator
 {
 public:
-	double getPi();
+	CSingleThreadPiCalculator(size_t iterationsNumber, double circleRadius);
 
-	SingleThreadPiCalculator(unsigned long long iterationsNumber, double circleRadius);
-	~SingleThreadPiCalculator();
+	double getPi() override;
 
-private:
-	const unsigned long long mIterationsNumber;
+protected:
+	bool isRandomDotInsideCircle(IRandomNumberGenerator * numberGenerator) const;
+
+	const size_t mIterationsNumber;
 	const double mCircleRadius;
 };
 

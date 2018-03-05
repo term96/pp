@@ -2,17 +2,17 @@
 #include "RandomNumberGenerator.h"
 
 
-double RandomNumberGenerator::getRandomDouble()
+double CRandomNumberGenerator::getRandomDouble()
 {
 	return mRealDistribution(mRandomEngine);
 }
 
-RandomNumberGenerator::RandomNumberGenerator(double min, double max)
+CRandomNumberGenerator::CRandomNumberGenerator(double min, double max)
 	: mRandomDevice(), mRandomEngine(mRandomDevice()), mRealDistribution(min, max)
 {
 }
 
 
-RandomNumberGenerator::~RandomNumberGenerator()
+CRandomNumberGenerator::~CRandomNumberGenerator()
 {
 }

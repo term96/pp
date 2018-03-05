@@ -1,24 +1,34 @@
 #include "stdafx.h"
 #include "IMonteCarloPiCalculator.h"
 #include "SingleThreadPiCalculator.h"
+#include "MultiThreadPiCalculator.h"
 
 int main(int argc, char** argv)
 {
-	SetConsoleOutputCP(1251);
-	IMonteCarloPiCalculator* piCalculator;
-	unsigned long long iterationsNumber;
+	const char * helpText = "Использование: montecarlopi.exe <кол-во итераций> <кол-во потоков>";
 	const double circleRadius = 1.;
+	SetConsoleOutputCP(1251);
 
-	if (argc == 2)
+	IMonteCarloPiCalculator* piCalculator;
+	size_t iterationsNumber;
+	size_t threadsNumber;
+
+	if (argc == 2 && argv[1] == "--help")
 	{
-		iterationsNumber = strtoull(argv[1], nullptr, 10);
-		piCalculator = new SingleThreadPiCalculator(iterationsNumber, circleRadius);
+		std::cout << helpText << std::endl;
+		return 0;
+	}
+	else if (argc == 3)
+	{
+		iterationsNumber = std::atoi(argv[1]);
+		threadsNumber = std::atoi(argv[2]);
+		piCalculator = threadsNumber == 1
+			? new CSingleThreadPiCalculator(iterationsNumber, circleRadius)
+			: new CMultiThreadPiCalculator(iterationsNumber, threadsNumber, circleRadius);
 	}
 	else
 	{
-		std::cout << "Неверное количество входных параметров\n"
-			<< "MonteCarloPi.exe <кол-во итераций>"
-			<< std::endl;
+		std::cout << helpText << std::endl;
 		return 1;
 	}
 
