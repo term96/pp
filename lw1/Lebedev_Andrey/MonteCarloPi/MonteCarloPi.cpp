@@ -1,12 +1,12 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
 #include "IMonteCarloPiCalculator.h"
 #include "SingleThreadPiCalculator.h"
 #include "MultiThreadPiCalculator.h"
 
 int main(int argc, char** argv)
 {
-	const char * helpText = "Использование: montecarlopi.exe <кол-во итераций> <кол-во потоков>";
-	const char * argCountError = "Неверное количество параметров. Запустите с параметром --help для просмотра описания";
+	const char * helpText = "РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ: montecarlopi.exe <РєРѕР»-РІРѕ РёС‚РµСЂР°С†РёР№> <РєРѕР»-РІРѕ РїРѕС‚РѕРєРѕРІ>";
+	const char * argCountError = "РќРµРІРµСЂРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РїР°СЂР°РјРµС‚СЂРѕРІ. Р—Р°РїСѓСЃС‚РёС‚Рµ СЃ РїР°СЂР°РјРµС‚СЂРѕРј --help РґР»СЏ РїСЂРѕСЃРјРѕС‚СЂР° РѕРїРёСЃР°РЅРёСЏ";
 	const double circleRadius = 1.;
 	SetConsoleOutputCP(1251);
 
@@ -41,7 +41,7 @@ int main(int argc, char** argv)
 
 	std::cout << "Calculation completed\n"
 		<< "PI = " << pi << '\n'
-		<< "Время вычисления: " << timeElapsedInMs << "мс" << std::endl;
+		<< "Р’СЂРµРјСЏ РІС‹С‡РёСЃР»РµРЅРёСЏ: " << timeElapsedInMs << "РјСЃ" << std::endl;
 	delete piCalculator;
 	return 0;
 }
