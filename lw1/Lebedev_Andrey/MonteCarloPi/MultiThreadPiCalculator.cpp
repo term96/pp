@@ -26,7 +26,7 @@ double CMultiThreadPiCalculator::getPi()
 		threads[i] = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE) &calculate, threadData, 0, NULL);
 	}
 
-	HANDLE progressThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE) &updateProgress, &mProgressData, 0, NULL);
+	HANDLE progressThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE) &showProgress, &mProgressData, 0, NULL);
 	WaitForMultipleObjects(mThreadsNumber, threads, true, INFINITE);
 	WaitForSingleObject(progressThread, INFINITE);
 	CloseHandle(progressThread);
@@ -37,31 +37,4 @@ double CMultiThreadPiCalculator::getPi()
 	}
 
 	return 4. * mProgressData.getDotsInsideCircleNumber() / mIterationsNumber;
-}
-
-DWORD CMultiThreadPiCalculator::calculate(ThreadData * threadData)
-{
-	IRandomNumberGenerator * numberGenerator = new CRandomNumberGenerator(-CIRCLE_RADIUS, CIRCLE_RADIUS);
-
-	for (size_t i = 0; i < threadData->iterationsNumber; i++)
-	{
-		if (isRandomDotInsideCircle(numberGenerator))
-		{
-			threadData->progressData->incrementDotsInsideCircleNumber();
-		}
-		threadData->progressData->incrementIterationsNumber();
-	}
-
-	delete numberGenerator;
-	delete threadData;
-	return 0;
-}
-
-DWORD CMultiThreadPiCalculator::updateProgress(ProgressData * progressData)
-{
-	while (progressData->getIterationsNumber() < progressData->totalIterationsNumber)
-	{
-		showProgress(progressData->getIterationsNumber(), progressData->totalIterationsNumber);
-	}
-	return 0;
 }
