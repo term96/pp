@@ -3,35 +3,26 @@
 #include "MainDoctor.h"
 #include "Patient.h"
 
+const size_t THREADS_NUMBER = 10;
+
+struct ThreadData {
+	ThreadData(CMainDoctor * firstMain, CMainDoctor * secondMain, CDoctor * surgeon, CDoctor * dentist, CDoctor * therapist)
+	{
+		m_firstMain = firstMain;
+		m_secondMain = secondMain;
+		m_surgeon = surgeon;
+		m_dentist = dentist;
+		m_therapist = therapist;
+	}
+	CMainDoctor * m_firstMain;
+	CMainDoctor * m_secondMain;
+	CDoctor * m_surgeon;
+	CDoctor * m_dentist;
+	CDoctor * m_therapist;
+};
+
 int main()
 {
-	CPatient patient[10];
-	CMainDoctor * main = new CMainDoctor();
-	CDoctor * surgeon = new CDoctor(DoctorType::SURGEON);
-	CDoctor * dentist = new CDoctor(DoctorType::DENTIST);
-	CDoctor * therapist = new CDoctor(DoctorType::THERAPIST);
-
-	for (size_t i = 0; i < 10; i++)
-	{
-		main->giveReferral(patient[i]);
-		switch (patient[i].getReferral())
-		{
-		case DoctorType::SURGEON:
-			surgeon->healPatient(patient[i]);
-			break;
-		case DoctorType::DENTIST:
-			dentist->healPatient(patient[i]);
-			break;
-		case DoctorType::THERAPIST:
-			therapist->healPatient(patient[i]);
-			break;
-		}
-	}
-
-	delete main;
-	delete surgeon;
-	delete dentist;
-	delete therapist;
-
+	HANDLE * threads = new HANDLE[THREADS_NUMBER];
     return 0;
 }
