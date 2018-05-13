@@ -21,9 +21,36 @@ struct ThreadData {
 	CDoctor * m_therapist;
 };
 
+DWORD WINAPI threadProc(LPVOID lpParameter)
+{
+	ThreadData * data = (ThreadData *) lpParameter;
+	CPatient patient;
+	if (patient.getId() % 2 == 0)
+	{
+		data->m_firstMain->giveReferral(patient);
+	}
+	else
+	{
+		data->m_secondMain->giveReferral(patient);
+	}
+	return 0;
+}
+
 int main()
 {
 	HANDLE * threads = new HANDLE[THREADS_NUMBER];
 	ThreadData threadData(new CMainDoctor(), new CMainDoctor(), new CDoctor(DoctorType::SURGEON), new CDoctor(DoctorType::DENTIST), new CDoctor(DoctorType::THERAPIST));
+
+	for (size_t i = 0; i < THREADS_NUMBER; i++)
+	{
+		threads[i] = CreateThread(NULL, 0, threadProc, &threadData, 0, NULL);
+	}
+
+	WaitForMultipleObjects(THREADS_NUMBER, threads, true, INFINITE);
+	for (size_t i = 0; i < THREADS_NUMBER; i++)
+	{
+		CloseHandle(threads);
+	}
+
     return 0;
 }
