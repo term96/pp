@@ -1,34 +1,38 @@
 #include "stdafx.h"
 #include "MainDoctor.h"
 
-
 CMainDoctor::CMainDoctor()
-	: CDoctor(Type::MAIN)
+	: CDoctor(DoctorType::MAIN)
 	, m_randomDevice()
 	, m_randomEngine(m_randomDevice())
 	, m_distribution()
 {
 }
 
-CDoctor::Type CMainDoctor::giveReferral()
+void CMainDoctor::giveReferral(CPatient & patient)
 {
+	std::printf("Patient #%d has came to %s\n", patient.getId(), getType().c_str());
 	WaitForSingleObject(m_mutex, INFINITE);
 
 	const int random = m_distribution(m_randomEngine);
-	Type referredDoctor;
-	std::cout << random << '\n';
-	switch (random % 3)
+	DoctorType referredDoctor;
+
+	static const size_t DOCTOR_TYPES_NUMBER = 3;
+	switch (random % DOCTOR_TYPES_NUMBER)
 	{
-	case 0: 
-		referredDoctor = Type::DENTIST;
+	case 0:
+		referredDoctor = DoctorType::DENTIST;
 		break;
 	case 1:
-		referredDoctor = Type::SURGEON;
+		referredDoctor = DoctorType::SURGEON;
 		break;
-	default: 
-		referredDoctor = Type::THERAPIST;
+	case 2:
+		referredDoctor = DoctorType::THERAPIST;
 	}
 	
+	std::printf("Patient #%d is getting referral from %s\n", patient.getId(), getType().c_str());
+	patient.takeReferral(referredDoctor);
+
+	std::printf("Patient #%d has left %s\n", patient.getId(), getType().c_str());
 	ReleaseMutex(m_mutex);
-	return referredDoctor;
 }

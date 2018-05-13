@@ -1,19 +1,21 @@
 #pragma once
 #include <random>
+#include "DoctorType.h"
+#include "Patient.h"
 
 class CDoctor
 {
 public:
-	enum Type {
-		MAIN, SURGEON, DENTIST, THERAPIST
-	};
-
-	CDoctor(Type type);
+	CDoctor(DoctorType type);
 	~CDoctor();
+	CDoctor(CDoctor &) = delete;
 
-	void healPatient() const;
+	void healPatient(CPatient & patient) const;
 
 protected:
-	Type m_type;
+	std::string getType() const;
+	static const size_t HEAL_TIME_MS;
+
+	DoctorType m_type;
 	HANDLE m_mutex;
 };
