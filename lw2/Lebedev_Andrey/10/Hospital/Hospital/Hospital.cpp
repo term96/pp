@@ -14,6 +14,14 @@ struct ThreadData {
 		m_dentist = dentist;
 		m_therapist = therapist;
 	}
+	~ThreadData()
+	{
+		delete m_firstMain;
+		delete m_secondMain;
+		delete m_surgeon;
+		delete m_dentist;
+		delete m_therapist;
+	}
 	CMainDoctor * m_firstMain;
 	CMainDoctor * m_secondMain;
 	CDoctor * m_surgeon;
@@ -64,5 +72,6 @@ int main()
 		CloseHandle(threads);
 	}
 
+	delete threads;
     return 0;
 }
