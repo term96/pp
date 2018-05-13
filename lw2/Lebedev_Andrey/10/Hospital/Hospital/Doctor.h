@@ -14,6 +14,7 @@ public:
 
 protected:
 	std::string getType() const;
+
 	static const size_t HEAL_TIME_MS;
 
 	DoctorType m_type;

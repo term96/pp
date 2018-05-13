@@ -24,5 +24,6 @@ struct ThreadData {
 int main()
 {
 	HANDLE * threads = new HANDLE[THREADS_NUMBER];
+	ThreadData threadData(new CMainDoctor(), new CMainDoctor(), new CDoctor(DoctorType::SURGEON), new CDoctor(DoctorType::DENTIST), new CDoctor(DoctorType::THERAPIST));
     return 0;
 }

@@ -12,6 +12,11 @@ public:
 	void giveReferral(CPatient & patient);
 
 private:
+	std::string getType() const;
+
+	static size_t id;
+
+	const size_t m_id;
 	std::random_device m_randomDevice;
 	std::mt19937 m_randomEngine;
 	std::uniform_int_distribution<> m_distribution;

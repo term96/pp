@@ -1,11 +1,14 @@
 #include "stdafx.h"
 #include "MainDoctor.h"
 
+size_t CMainDoctor::id = 1;
+
 CMainDoctor::CMainDoctor()
 	: CDoctor(DoctorType::MAIN)
 	, m_randomDevice()
 	, m_randomEngine(m_randomDevice())
 	, m_distribution()
+	, m_id(id++)
 {
 }
 
@@ -35,4 +38,9 @@ void CMainDoctor::giveReferral(CPatient & patient)
 
 	std::printf("Patient #%d has left %s\n", patient.getId(), getType().c_str());
 	ReleaseMutex(m_mutex);
+}
+
+std::string CMainDoctor::getType() const
+{
+	return "main doctor #" + m_id;
 }
