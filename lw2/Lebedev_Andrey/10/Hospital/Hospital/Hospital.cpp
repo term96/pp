@@ -3,7 +3,7 @@
 #include "MainDoctor.h"
 #include "Patient.h"
 
-const size_t THREADS_NUMBER = 10;
+const size_t THREADS_NUMBER = 4;
 
 struct ThreadData {
 	ThreadData(CMainDoctor * firstMain, CMainDoctor * secondMain, CDoctor * surgeon, CDoctor * dentist, CDoctor * therapist)
@@ -32,6 +32,18 @@ DWORD WINAPI threadProc(LPVOID lpParameter)
 	else
 	{
 		data->m_secondMain->giveReferral(patient);
+	}
+	switch (patient.getReferral())
+	{
+	case DoctorType::SURGEON:
+		data->m_surgeon->healPatient(patient);
+		break;
+	case DoctorType::DENTIST:
+		data->m_dentist->healPatient(patient);
+		break;
+	case DoctorType::THERAPIST:
+		data->m_therapist->healPatient(patient);
+		break;
 	}
 	return 0;
 }
