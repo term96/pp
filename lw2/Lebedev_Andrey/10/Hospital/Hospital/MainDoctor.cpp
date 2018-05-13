@@ -42,5 +42,5 @@ void CMainDoctor::giveReferral(CPatient & patient)
 
 std::string CMainDoctor::getType() const
 {
-	return "main doctor #" + m_id;
+	return "main doctor #" + std::to_string(m_id);
 }
