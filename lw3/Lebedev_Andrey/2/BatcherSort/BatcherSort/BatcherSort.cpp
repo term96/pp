@@ -25,7 +25,7 @@ void test()
 	std::chrono::time_point<std::chrono::high_resolution_clock> endTime;
 	long long timeElapsedInMs;
 
-	for (size_t size = 1000; size <= 100000; size *= 10)
+	for (size_t size = 1000; size <= 10000000; size *= 10)
 	{
 		std::vector<int> vectorForSort;
 		std::vector<int> vectorForBatcher;

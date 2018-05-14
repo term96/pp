@@ -1,5 +1,16 @@
 #include "stdafx.h"
 #include "BatcherAlgorithm.h"
+#include <omp.h>
+
+inline void compareAndExchange(std::vector<int> & vector, size_t left, size_t right)
+{
+	if (vector[left] > vector[right])
+	{
+		int tempNum = vector[left];
+		vector[left] = vector[right];
+		vector[right] = tempNum;
+	}
+}
 
 void CBatcherAlgorithm::sort(std::vector<int>& vector) const
 {
@@ -13,27 +24,19 @@ void CBatcherAlgorithm::sort(std::vector<int>& vector) const
 		d = p;
 		while (q >= p)
 		{
-			for (size_t i = 0; i < vector.size() - d; i++)
+			#pragma omp parallel for
+			for (int i = 0; i < static_cast<int>(vector.size() - d); i++)
 			{
 				if ((i & p) == r)
 				{
 					compareAndExchange(vector, i, i + d);
 				}
 			}
+
 			d = q - p;
 			q = q / 2;
 			r = p;
 		}
 		p = p / 2;
-	}
-}
-
-void CBatcherAlgorithm::compareAndExchange(std::vector<int> & vector, size_t left, size_t right) const
-{
-	if (vector[left] > vector[right])
-	{
-		int tempNum = vector[left];
-		vector[left] = vector[right];
-		vector[right] = tempNum;
 	}
 }
