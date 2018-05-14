@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include <math.h>
 #include <iostream>
+#include <time.h>
+#include <vector>
+#include <algorithm>
 
 void compareAndExchange(int * array, int left, int right)
 {
@@ -17,6 +20,15 @@ void printArray(int * array, int size)
 	for (int i = 0; i < size; i++)
 	{
 		std::cout << array[i] << ' ';
+	}
+	std::cout << std::endl;
+}
+
+void printVector(std::vector<int> & vector)
+{
+	for (int i = 0; i < vector.size(); i++)
+	{
+		std::cout << vector[i] << ' ';
 	}
 	std::cout << std::endl;
 }
@@ -40,7 +52,6 @@ void batcherSort(int * array, int size)
 					compareAndExchange(array, i, i + d);
 				}
 			}
-			printArray(array, size);
 			d = q - p;
 			q = q / 2;
 			r = p;
@@ -49,12 +60,48 @@ void batcherSort(int * array, int size)
 	}
 }
 
+void test()
+{
+	srand(time(NULL));
+	for (int size = 1; size <= 10; size++)
+	{
+		std::vector<int> vector;
+		int * array = new int[size];
+		for (int i = 0; i < size; i++)
+		{
+			vector.push_back(rand());
+			array[i] = vector[i];
+		}
+
+		std::cout << "Vector: ";
+		printVector(vector);
+
+		std::cout << "Array:  ";
+		printArray(array, size);
+
+		std::sort(vector.begin(), vector.end());
+		batcherSort(array, size);
+
+		std::cout << "Vector: ";
+		printVector(vector);
+
+		std::cout << "Array:  ";
+		printArray(array, size);
+
+		for (int i = 0; i < size; i++)
+		{
+			if (vector[i] != array[i])
+			{
+				std::cout << "Error\n";
+			}
+		}
+
+		delete[] array;
+		std::cout << '\n';
+	}
+}
+
 int main()
 {
-	const int size = 16;
-	int array[size] = { 503, 87, 512, 61, 908, 170, 897, 275, 653, 426, 154, 509, 612, 677, 765, 703 };
-
-	printArray(array, size);
-	batcherSort(array, size);
     return 0;
 }
