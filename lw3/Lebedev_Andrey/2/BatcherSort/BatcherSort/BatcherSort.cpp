@@ -5,38 +5,29 @@
 #include <vector>
 #include <algorithm>
 
-void compareAndExchange(int * array, int left, int right)
+void compareAndExchange(std::vector<int> & vector, size_t left, size_t right)
 {
-	if (array[left] > array[right])
+	if (vector[left] > vector[right])
 	{
-		int tempNum = array[left];
-		array[left] = array[right];
-		array[right] = tempNum;
+		int tempNum = vector[left];
+		vector[left] = vector[right];
+		vector[right] = tempNum;
 	}
-}
-
-void printArray(int * array, int size)
-{
-	for (int i = 0; i < size; i++)
-	{
-		std::cout << array[i] << ' ';
-	}
-	std::cout << std::endl;
 }
 
 void printVector(std::vector<int> & vector)
 {
-	for (int i = 0; i < vector.size(); i++)
+	for (size_t i = 0; i < vector.size(); i++)
 	{
 		std::cout << vector[i] << ' ';
 	}
 	std::cout << std::endl;
 }
 
-void batcherSort(int * array, int size)
+void batcherSort(std::vector<int> & vector)
 {
 	int t, p, q, r, d;
-	t = static_cast<int>(ceil(log2(size)));
+	t = static_cast<int>(ceil(log2(vector.size())));
 	p = static_cast<int>(pow(2, t - 1));
 	while (p > 0)
 	{
@@ -45,11 +36,11 @@ void batcherSort(int * array, int size)
 		d = p;
 		while (q >= p)
 		{
-			for (int i = 0; i < size - d; i++)
+			for (size_t i = 0; i < vector.size() - d; i++)
 			{
 				if ((i & p) == r)
 				{
-					compareAndExchange(array, i, i + d);
+					compareAndExchange(vector, i, i + d);
 				}
 			}
 			d = q - p;
@@ -63,45 +54,46 @@ void batcherSort(int * array, int size)
 void test()
 {
 	srand(time(NULL));
-	for (int size = 1; size <= 10; size++)
+	for (size_t size = 1; size <= 10; size++)
 	{
-		std::vector<int> vector;
-		int * array = new int[size];
-		for (int i = 0; i < size; i++)
+		std::vector<int> vectorForSort;
+		std::vector<int> vectorForBatcher;
+		for (size_t i = 0; i < size; i++)
 		{
-			vector.push_back(rand());
-			array[i] = vector[i];
+			vectorForSort.push_back(rand());
+			vectorForBatcher.push_back(vectorForSort[i]);
 		}
 
-		std::cout << "Vector: ";
-		printVector(vector);
+		std::cout << "Sort:    ";
+		printVector(vectorForSort);
 
-		std::cout << "Array:  ";
-		printArray(array, size);
+		std::cout << "Batcher: ";
+		printVector(vectorForBatcher);
 
-		std::sort(vector.begin(), vector.end());
-		batcherSort(array, size);
+		std::sort(vectorForSort.begin(), vectorForSort.end());
+		batcherSort(vectorForBatcher);
 
-		std::cout << "Vector: ";
-		printVector(vector);
+		std::cout << "Sort:    ";
+		printVector(vectorForSort);
 
-		std::cout << "Array:  ";
-		printArray(array, size);
+		std::cout << "Batcher: ";
+		printVector(vectorForBatcher);
 
 		for (int i = 0; i < size; i++)
 		{
-			if (vector[i] != array[i])
+			if (vectorForSort[i] != vectorForBatcher[i])
 			{
 				std::cout << "Error\n";
+				return;
 			}
 		}
 
-		delete[] array;
 		std::cout << '\n';
 	}
 }
 
 int main()
 {
-    return 0;
+	test();
+	return 0;
 }
