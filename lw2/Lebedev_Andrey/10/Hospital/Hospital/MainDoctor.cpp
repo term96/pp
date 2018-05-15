@@ -12,27 +12,28 @@ CMainDoctor::CMainDoctor()
 {
 }
 
+inline DoctorType CMainDoctor::generateReferral()
+{
+	static const size_t DOCTOR_TYPES_NUMBER = 3;
+	const int random = m_distribution(m_randomEngine);
+	switch (random % DOCTOR_TYPES_NUMBER)
+	{
+	case 0:
+		return DoctorType::DENTIST;
+	case 1:
+		return DoctorType::SURGEON;
+	default:
+		return DoctorType::THERAPIST;
+	}
+}
+
 void CMainDoctor::giveReferral(CPatient & patient)
 {
 	std::printf("Patient #%d has came to %s\n", patient.getId(), getType().c_str());
 	WaitForSingleObject(m_mutex, INFINITE);
-
-	const int random = m_distribution(m_randomEngine);
-	DoctorType referredDoctor;
-
-	static const size_t DOCTOR_TYPES_NUMBER = 3;
-	switch (random % DOCTOR_TYPES_NUMBER)
-	{
-	case 0:
-		referredDoctor = DoctorType::DENTIST;
-		break;
-	case 1:
-		referredDoctor = DoctorType::SURGEON;
-		break;
-	case 2:
-		referredDoctor = DoctorType::THERAPIST;
-	}
 	
+	DoctorType referredDoctor = generateReferral();
+
 	std::printf("Patient #%d is getting referral from %s\n", patient.getId(), getType().c_str());
 	patient.takeReferral(referredDoctor);
 

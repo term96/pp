@@ -13,6 +13,7 @@ public:
 
 private:
 	std::string getType() const;
+	DoctorType generateReferral();
 
 	static size_t nextMainDoctorId;
 
