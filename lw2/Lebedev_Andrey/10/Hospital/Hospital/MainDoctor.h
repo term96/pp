@@ -14,7 +14,7 @@ public:
 private:
 	std::string getType() const;
 
-	static size_t id;
+	static size_t nextMainDoctorId;
 
 	const size_t m_id;
 	std::random_device m_randomDevice;

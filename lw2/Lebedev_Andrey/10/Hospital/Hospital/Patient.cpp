@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "Patient.h"
 
-size_t CPatient::id = 1;
+size_t CPatient::nextPatientId = 1;
 
 CPatient::CPatient()
-	: m_id(id++)
+	: m_id(nextPatientId++)
 {
 }
 

@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #include "MainDoctor.h"
 
-size_t CMainDoctor::id = 1;
+size_t CMainDoctor::nextMainDoctorId = 1;
 
 CMainDoctor::CMainDoctor()
 	: CDoctor(DoctorType::MAIN)
 	, m_randomDevice()
 	, m_randomEngine(m_randomDevice())
 	, m_distribution()
-	, m_id(id++)
+	, m_id(nextMainDoctorId++)
 {
 }
 

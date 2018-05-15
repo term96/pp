@@ -11,7 +11,7 @@ public:
 	size_t getId() const;
 
 private:
-	static size_t id;
+	static size_t nextPatientId;
 
 	const size_t m_id;
 	DoctorType m_referral;
